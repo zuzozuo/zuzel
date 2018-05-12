@@ -34,12 +34,17 @@ class MapGenerator {
 		canvasContext.fillStyle = "#87db34"
 		canvasContext.fill();
 
-
-
 		canvasContext.beginPath();
 		canvasContext.moveTo(width / 2 + 100, 500);
 		canvasContext.lineTo(width / 2 + 100, 400);
 		canvasContext.stroke();
+
+		canvasContext.strokeStyle = 'grey';
+		canvasContext.beginPath();
+		canvasContext.moveTo(width / 2 -100, 100);
+		canvasContext.lineTo(width / 2 - 100, 200);
+		canvasContext.stroke();
+		 
 	}
 
 	getStartingPosition(amount, num) {
@@ -78,4 +83,15 @@ class MapGenerator {
 			) 
 		)
 	}
+
+	crossCheckPoint(player){
+		if(player.checkpoint == false){
+			return player.collideWithLine((this.width/2) - 100, 100, (this.width/2)-100, 200)
+		}else{
+
+			 return player.collideWithLine((this.width/2) + 100, 400, (this.width/2) + 100, 500)
+		}
+
+	}
+
 }

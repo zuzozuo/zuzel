@@ -10,6 +10,9 @@ class Player {
 		this.radius = 7;
 		this.speed = 1.75;
 		this.alpha = 0;
+		this.laps = 0;
+		this.checkpoint = false;
+		this.isWinner = false;
 	}
 
 	render() {
@@ -110,6 +113,20 @@ class Player {
 	dropDead() {
 		this.isAlive = false;
 	}
+
+	crossCheckPoint(allLaps){
+		this.checkpoint = !this.checkpoint;
+		this.laps += 0.5;
+
+		if(this.laps == allLaps){
+			this.isWinner = true;
+		}
+
+	}
+
+
+
+
 
 
 }

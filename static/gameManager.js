@@ -13,11 +13,13 @@ class GameManager {
 		this.menu = new Menu(menu, width, height);
 		this.playerColors = ['#cc0000', '#009900', '#002db3', '#ffff00'];
 		this.state = null;
-		this.lapNum = 5;
-		this.players = [];		
+		this.lapNum = 2;
+		this.players = [];
+		this.endGame = false;
+		this.winner = null;
 	}
 
-	setup(){
+	setup() {
 		let menu = this.menu;
 		this.state = STATE_WAIT_FOR_PLAYER_NUM;
 		menu.showMenu();
@@ -53,49 +55,96 @@ class GameManager {
 				break;
 
 		}
-
-
 	}
 
-	createPlayers(){
-		for(let i = 0; i < this.menu.playerNum; i++){
+	createPlayers() {
+		for (let i = 0; i < this.menu.playerNum; i++) {
 			let posY = this.map.getStartingPosition(this.menu.playerNum, i);
-			let posX = (this.width/2) + 100;
+			let posX = (this.width / 2) + 100;
 			let player = new Player(i, this.playerColors[i], this.menu.playerKeys[i], posX, posY, this.context);
 			this.players.push(player)
 		}
 	}
 
-	updatePlayers(){
-		for(let i = 0; i < this.players.length; i++){
-			if(this.players[i].isAlive){
+	updatePlayers() {
+		for (let i = 0; i < this.players.length; i++) {
+			if (this.players[i].isAlive && this.endGame == false) {
 				this.players[i].move();
-			}			
+			}
 		}
 
-		for(let i = 0; i < this.players.length; i++){
-			if(this.key.isPressed(this.players[i].key) && this.players[i].isAlive){
+		for (let i = 0; i < this.players.length; i++) {
+			if (this.key.isPressed(this.players[i].key) && this.players[i].isAlive && this.endGame == false) {
 				this.players[i].changeAngle();
 			}
 		}
 
-		for(let i = 0; i < this.players.length; i++){
-			if(this.players[i].isAlive && this.map.getCollisions(this.players[i])){
-				console.log("Buh")
+		for (let i = 0; i < this.players.length; i++) {
+			if (this.players[i].isAlive && this.map.getCollisions(this.players[i])) {
 				this.players[i].dropDead();
 			}
 		}
 
+		for (let i = 0; i < this.players.length; i++) {
+			if (this.players[i].isAlive && this.map.crossCheckPoint(this.players[i])) {
+				this.players[i].crossCheckPoint(this.lapNum);
+				console.log(this.players[i].uid + " " + this.players[i].laps)
+			}
+		}
+
+		
+		if(this.menu.playerNum != 1){
+			let left = 0;
+			for(let i = 0; i < this.players.length; i++){
+				if(this.players[i].isAlive){
+					this.winner = i;
+					left +=1;
+				}		
+			}
+
+			if(left == 1){
+				this.endGame = true;
+			}
+		}else{
+			if(this.players[0].laps == this.lapNum){
+				this.players[0].isWinner = true;
+				this.winner = this.players[0].uid;
+			}
+		}
+
+		for (let i = 0; i < this.players.length; i++) {
+			if (this.players[i].isWinner) {
+				this.endGame = true;
+			}
+		}
 	}
 
+	/*endGame(){
+
+	}*/
 
 
-	render(){
-		
-		this.map.createMap();		
+	render() {
 
-		for(let i = 0; i < this.players.length; i++){
+		this.map.createMap();
+		for (let i = 0; i < this.players.length; i++) {
 			this.players[i].render();
+		}
+
+		if (this.endGame) {
+			let ctx = this.context;
+			ctx.font = "30px Tahoma";
+			ctx.fillStyle = this.players[this.winner].color;
+			ctx.textAlign = "center";
+			ctx.fillText("Brawo wygrales gre fajnie: plejer " + parseInt(this.players[this.winner].uid+1), this.width / 2,  this.height / 2);
+		}else{
+			let ctx = this.context;
+			ctx.font = "20px Tahoma";
+			ctx.textAlign = "center";
+			for(let i = 0; i < this.players.length; i++){
+				ctx.fillStyle = this.players[i].color;
+				ctx.fillText("Player " + i + ": " + Math.floor(this.players[i].laps) + "/" + this.lapNum, this.width / 2 - 100 , (this.height / 2 - 50) + 25 * i);
+			}
 		}
 	}
 }						

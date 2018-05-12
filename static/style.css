@@ -56,3 +56,22 @@ select{
 .number:hover{
   background-color: rgba(255,255,255,0.8)
 }
+
+#setup{
+  display: none;
+  width: 300px;
+  height: 100px;
+  text-align: center;
+  border: 1px solid black;
+  position: absolute;
+  z-index: 5;
+  top: 100px;
+}
+
+
+#info{
+  position: absolute;
+  top: 0;
+  left: 100px;
+  z-index: 10;
+}

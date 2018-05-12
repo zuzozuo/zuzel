@@ -2,6 +2,7 @@ class Menu {
 	constructor(menu, width, height) {
 		this.playerNum = null;
 		this.playerKeys = [];
+		this.colors = ['#cc0000', '#009900', '#002db3', '#ffff00'];
 		this.div = null;
 		this.select = null;
 		this.option = null;
@@ -67,8 +68,6 @@ class Menu {
 		bigMenu.style.display = "none";
 
 	}
-
-
 
 }
 
