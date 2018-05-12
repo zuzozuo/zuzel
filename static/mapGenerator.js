@@ -8,7 +8,6 @@ class MapGenerator {
 
 	createMap() {
 		let canvasContext = this.context,
-			//startLine = this.canvas.getContext("2d"),
 			height = this.height,
 			width = this.width;
 
@@ -18,7 +17,6 @@ class MapGenerator {
 		canvasContext.beginPath();
 		canvasContext.fillStyle = "#DBD78A"
 		canvasContext.arc(220, height / 2, 200, 0.5 * Math.PI, 1.5 * Math.PI)
-		canvasContext.stroke();
 		canvasContext.arc(width - 220, height / 2, 200, 1.5 * Math.PI, 0.5 * Math.PI)
 		canvasContext.closePath();
 		canvasContext.fill();
@@ -33,9 +31,9 @@ class MapGenerator {
 		canvasContext.fillStyle = "#87db34"
 		canvasContext.fill();
 
-		/*startLine.beginPath();
-		startLine.moveTo(width / 2 + 100, 500);
-		startLine.lineTo(width / 2 + 100, 400);
-		startLine.stroke();*/
+		canvasContext.beginPath();
+		canvasContext.moveTo(width / 2 + 100, 500);
+		canvasContext.lineTo(width / 2 + 100, 400);
+		canvasContext.stroke();
 	}
 }

@@ -4,12 +4,34 @@
 }
 
 #menu{
-  display: none;
-  border: 5px solid black;
   position: absolute;
-  z-index: 4;
+  z-index: 3;
   text-align: center;
   background-color: rgba(135, 219, 52, 0.6);
+  width: 800px;
+  height: 600px;
+  border: 5px solid black;
+}
+h1{
+  margin: 20px;
+  letter-spacing: 5px;
+  font-size: 50px;
+}
+
+h2{
+  margin-top: 80px;
+
+}
+
+#miniMenu{
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  text-align: center;
+  width: 800px;
+  height: 600px;
 }
 
 .number{
