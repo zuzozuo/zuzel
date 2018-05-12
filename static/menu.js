@@ -37,7 +37,6 @@ class Menu {
 	getPlayerNum(event) {
 		this.playerNum = parseInt(event.target.dataset.number) + 1
 		this.menuDiv.innerHTML = " ";
-		console.log(this.playerNum)
 		this.div.removeEventListener("click", this.fn)
 	}
 
@@ -59,7 +58,6 @@ class Menu {
 		} 
 
 		this.playerKeys.push(event.keyCode)
-		console.log(this.playerKeys)
 		this.menuDiv.innerHTML = " ";
 		document.removeEventListener('keyup', this.fn)
 	}

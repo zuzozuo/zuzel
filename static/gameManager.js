@@ -8,13 +8,16 @@ class GameManager {
 		this.context = context;
 		this.height = height;
 		this.width = width;
+		this.key = new Key();
 		this.map = new MapGenerator('map', context, width, height);
 		this.menu = new Menu(menu, width, height);
 		this.playerColors = ['#cc0000', '#009900', '#002db3', '#ffff00'];
 		this.state = null;
+		this.lapNum = 5;
+		this.players = [];		
 	}
 
-	setup() {
+	setup(){
 		let menu = this.menu;
 		this.state = STATE_WAIT_FOR_PLAYER_NUM;
 		menu.showMenu();
@@ -46,6 +49,7 @@ class GameManager {
 				break;
 
 			case STATE_GAME:
+				this.updatePlayers();
 				break;
 
 		}
@@ -54,10 +58,26 @@ class GameManager {
 	}
 
 	createPlayers(){
-
+		for(let i = 0; i < this.menu.playerNum; i++){
+			let posY = this.map.getStartingPosition(this.menu.playerNum, i);
+			let posX = (this.width/2) + 100;
+			let player = new Player(i, this.playerColors[i], this.menu.playerKeys[i], posX, posY, this.context);
+			this.players.push(player)
+		}
+		console.log(this.players)
 	}
 
-	render() {
+	updatePlayers(){
+		for(let i = 0; i < this.players.length; i++){
+			this.players[i].move();
+		}
+	}
+
+	render(){
 		this.map.createMap();
+
+		for(let i = 0; i < this.players.length; i++){
+			this.players[i].render();
+		}
 	}
 }						

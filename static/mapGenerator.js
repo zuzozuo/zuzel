@@ -36,4 +36,9 @@ class MapGenerator {
 		canvasContext.lineTo(width / 2 + 100, 400);
 		canvasContext.stroke();
 	}
+
+
+	getStartingPosition(amount, num){
+		return((100/(amount+1)) *  (num+1)  + 400 )
+	}
 }
