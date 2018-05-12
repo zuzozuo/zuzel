@@ -64,17 +64,35 @@ class GameManager {
 			let player = new Player(i, this.playerColors[i], this.menu.playerKeys[i], posX, posY, this.context);
 			this.players.push(player)
 		}
-		console.log(this.players)
 	}
 
 	updatePlayers(){
 		for(let i = 0; i < this.players.length; i++){
-			this.players[i].move();
+			if(this.players[i].isAlive){
+				this.players[i].move();
+			}			
 		}
+
+		for(let i = 0; i < this.players.length; i++){
+			if(this.key.isPressed(this.players[i].key) && this.players[i].isAlive){
+				this.players[i].changeAngle();
+			}
+		}
+
+		for(let i = 0; i < this.players.length; i++){
+			if(this.players[i].isAlive && this.map.getCollisions(this.players[i])){
+				console.log("Buh")
+				this.players[i].dropDead();
+			}
+		}
+
 	}
 
+
+
 	render(){
-		this.map.createMap();
+		
+		this.map.createMap();		
 
 		for(let i = 0; i < this.players.length; i++){
 			this.players[i].render();
