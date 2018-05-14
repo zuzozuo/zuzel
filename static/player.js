@@ -17,7 +17,11 @@ class Player {
 
 	render() {
 		let ctx = this.context;
-		ctx.fillStyle = this.color;
+		let motorcycle = new Image();
+		motorcycle.src = ('img/motor.png');
+
+		let motoPattern = ctx.createPattern(motorcycle, 'no-repeat')
+		ctx.fillStyle = this.color //motoPattern;
 		ctx.strokeStyle = 'black';
 		ctx.lineWidth = 1;
 

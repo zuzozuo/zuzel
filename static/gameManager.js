@@ -11,12 +11,13 @@ class GameManager {
 		this.key = new Key();
 		this.map = new MapGenerator('map', context, width, height);
 		this.menu = new Menu(menu, width, height);
-		this.playerColors = ['#cc0000', '#009900', '#002db3', '#ffff00'];
+		this.playerColors = ['#892B1B', '#303C12', '#365287', '#604020'];
 		this.state = null;
-		this.lapNum = 2;
+		this.lapNum = 5;
 		this.players = [];
 		this.endGame = false;
 		this.winner = null;
+		this.loser = null;
 	}
 
 	setup() {
@@ -92,23 +93,25 @@ class GameManager {
 			}
 		}
 
-		
-		if(this.menu.playerNum != 1){
+
+		if (this.menu.playerNum != 1) {
 			let left = 0;
-			for(let i = 0; i < this.players.length; i++){
-				if(this.players[i].isAlive){
+			for (let i = 0; i < this.players.length; i++) {
+				if (this.players[i].isAlive) {
 					this.winner = i;
-					left +=1;
-				}		
+					left += 1;
+				}
 			}
 
-			if(left == 1){
+			if (left == 1) {
 				this.endGame = true;
 			}
-		}else{
-			if(this.players[0].laps == this.lapNum){
+		} else {
+			if (this.players[0].laps == this.lapNum) {
 				this.players[0].isWinner = true;
 				this.winner = this.players[0].uid;
+			} else if (this.players[0].isAlive == false) {
+				this.loser = true;
 			}
 		}
 
@@ -133,18 +136,27 @@ class GameManager {
 
 		if (this.endGame) {
 			let ctx = this.context;
-			ctx.font = "30px Tahoma";
+			ctx.font = "bold 25px Tahoma";
 			ctx.fillStyle = this.players[this.winner].color;
 			ctx.textAlign = "center";
-			ctx.fillText("Brawo wygrales gre fajnie: plejer " + parseInt(this.players[this.winner].uid+1), this.width / 2,  this.height / 2);
-		}else{
+			ctx.fillText("Brawo wygrales gre fajnie graczu nr " + parseInt(this.players[this.winner].uid + 1), this.width / 2, this.height / 2);
+		} else if (this.loser) {
 			let ctx = this.context;
-			ctx.font = "20px Tahoma";
+			ctx.font = "bold 25px Tahoma";
+			ctx.fillStyle = this.players[0].color;
 			ctx.textAlign = "center";
-			for(let i = 0; i < this.players.length; i++){
+			ctx.fillText("Przegrałeś gre :( ", this.width / 2, this.height / 2);
+
+
+		} else {
+			let ctx = this.context;
+			ctx.font = "bold 25px Tahoma";
+			ctx.textAlign = "center";
+			for (let i = 0; i < this.players.length; i++) {
 				ctx.fillStyle = this.players[i].color;
-				ctx.fillText("Player " + i + ": " + Math.floor(this.players[i].laps) + "/" + this.lapNum, this.width / 2 - 100 , (this.height / 2 - 50) + 25 * i);
+				ctx.fillText("Gracz " + i + ":  " + Math.floor(this.players[i].laps) + "/" + this.lapNum, this.width / 2 - 100, (this.height / 2 - 50) + 30 * i);
 			}
 		}
+
 	}
 }						

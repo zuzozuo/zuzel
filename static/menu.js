@@ -43,7 +43,7 @@ class Menu {
 
 	showKeyChoiceMenu(){
 		this.keyAmount = this.playerKeys.length;
-		this.header2.innerHTML = "Wybierz klawisz uŻytkowniku " + (this.playerKeys.length + 1);
+		this.header2.innerHTML = "Wybierz klawisz graczu nr " + (this.playerKeys.length + 1);
 		this.menuDiv.style.display = "block";
 		this.menuDiv.appendChild(this.header2);	
 		this.fn = this.getKey.bind(this)		

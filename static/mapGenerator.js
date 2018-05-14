@@ -11,27 +11,37 @@ class MapGenerator {
 	createMap() {
 		let canvasContext = this.context,
 			height = this.height,
-			width = this.width;
+			width = this.width,
+			grass = new Image(),
+			sand = new Image();
+		
+		grass.src = 'img/grass.jpg';
+		sand.src = 'img/sand.jpg';
+		
+		let grassPattern = canvasContext.createPattern(grass,'repeat'),
+			sandPattern = canvasContext.createPattern(sand, 'repeat-x');		
 
-		canvasContext.strokeStyle = 'black';
-		canvasContext.fillStyle = "#87db34";
+		canvasContext.strokeStyle = 'rgba(0,0,0, 0.7)';
+		canvasContext.fillStyle = grassPattern; //"#87db34";
 		canvasContext.fillRect(0, 0, width, height);
-		canvasContext.lineWidth = 2;
+		canvasContext.lineWidth = 3;
 		canvasContext.beginPath();
-		canvasContext.fillStyle = "#DBD78A"
+		canvasContext.fillStyle = sandPattern;//"#DBD78A"
 		canvasContext.arc(220, height / 2, 200, 0.5 * Math.PI, 1.5 * Math.PI)
 		canvasContext.arc(width - 220, height / 2, 200, 1.5 * Math.PI, 0.5 * Math.PI)
 		canvasContext.closePath();
 		canvasContext.fill();
 		canvasContext.stroke();
-
+		
+		
 		canvasContext.beginPath();
 		canvasContext.arc(220, height / 2, 100, 0.5 * Math.PI, 1.5 * Math.PI)
 		canvasContext.stroke();
 		canvasContext.arc(width - 220, height / 2, 100, 1.5 * Math.PI, 0.5 * Math.PI);
 		canvasContext.closePath();
 		canvasContext.stroke();
-		canvasContext.fillStyle = "#87db34"
+		canvasContext.fillStyle = grassPattern;//"#87db34"
+		canvasContext.lineWidth = 2;
 		canvasContext.fill();
 
 		canvasContext.beginPath();
@@ -39,7 +49,7 @@ class MapGenerator {
 		canvasContext.lineTo(width / 2 + 100, 400);
 		canvasContext.stroke();
 
-		canvasContext.strokeStyle = 'grey';
+		canvasContext.strokeStyle = 'rgba(255, 26, 26, 0.6)';
 		canvasContext.beginPath();
 		canvasContext.moveTo(width / 2 -100, 100);
 		canvasContext.lineTo(width / 2 - 100, 200);
