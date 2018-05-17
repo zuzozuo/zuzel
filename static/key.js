@@ -1,3 +1,4 @@
+//obsluga klawiszy
 class Key{
     constructor(){
         this.pressed = {};

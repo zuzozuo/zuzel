@@ -1,4 +1,6 @@
-const STATE_WAIT_FOR_PLAYER_NUM = 1;
+//Klasa zajmująca się obsługą całej gry
+
+const STATE_WAIT_FOR_PLAYER_NUM = 1; //stany
 const STATE_WAIT_FOR_KEYS = 2;
 const STATE_INIT_GAME = 3;
 const STATE_GAME = 4;
@@ -20,13 +22,13 @@ class GameManager {
 		this.loser = null;
 	}
 
-	setup() {
+	setup() { //pokazanie menu i wbor ilosci uzytkownikow
 		let menu = this.menu;
 		this.state = STATE_WAIT_FOR_PLAYER_NUM;
 		menu.showMenu();
 	}
 
-	update() {
+	update() { //zmiana stanów
 		switch (this.state) {
 			case STATE_WAIT_FOR_PLAYER_NUM:
 				if (this.menu.playerNum != null) {
@@ -58,7 +60,7 @@ class GameManager {
 		}
 	}
 
-	createPlayers() {
+	createPlayers() { //tworzenie playera
 		for (let i = 0; i < this.menu.playerNum; i++) {
 			let posY = this.map.getStartingPosition(this.menu.playerNum, i);
 			let posX = (this.width / 2) + 100;
@@ -67,7 +69,7 @@ class GameManager {
 		}
 	}
 
-	updatePlayers() {
+	updatePlayers() { //aktualizacja kazdego zachowania  i flag playera
 		for (let i = 0; i < this.players.length; i++) {
 			if (this.players[i].isAlive && this.endGame == false) {
 				this.players[i].move();
@@ -91,6 +93,10 @@ class GameManager {
 				this.players[i].crossCheckPoint(this.lapNum);
 				console.log(this.players[i].uid + " " + this.players[i].laps)
 			}
+		}
+
+		for(let i = 0; i < this.players.length; i++){
+			this.players[i].leaveTrace()
 		}
 
 
@@ -122,16 +128,13 @@ class GameManager {
 		}
 	}
 
-	/*endGame(){
-
-	}*/
-
 
 	render() {
 
 		this.map.createMap();
 		for (let i = 0; i < this.players.length; i++) {
 			this.players[i].render();
+			this.players[i].trace.render();
 		}
 
 		if (this.endGame) {

@@ -1,3 +1,4 @@
+//klasa z menu
 class Menu {
 	constructor(menu, width, height) {
 		this.playerNum = null;

@@ -1,3 +1,4 @@
+//klasa odpowiedzialna za playera - render, ruch, kolizje
 class Player {
 	constructor(uid, color, key, x, y, context) {
 		this.uid = uid;
@@ -13,14 +14,16 @@ class Player {
 		this.laps = 0;
 		this.checkpoint = false;
 		this.isWinner = false;
+		this.trace = new Trace(context,color)
 	}
 
 	render() {
 		let ctx = this.context;
-		let motorcycle = new Image();
-		motorcycle.src = ('img/motor.png');
+		
+		//let motorcycle = new Image();
+		//motorcycle.src = ('img/motor.png');
 
-		let motoPattern = ctx.createPattern(motorcycle, 'no-repeat')
+		//let motoPattern = ctx.createPattern(motorcycle, 'no-repeat')
 		ctx.fillStyle = this.color //motoPattern;
 		ctx.strokeStyle = 'black';
 		ctx.lineWidth = 1;
@@ -124,6 +127,15 @@ class Player {
 
 		if(this.laps == allLaps){
 			this.isWinner = true;
+		}
+
+	}
+
+	leaveTrace(x,y){
+		if(this.isAlive){
+			this.trace.update(this.posX, this.posY)
+		}else{
+			this.trace.update();
 		}
 
 	}

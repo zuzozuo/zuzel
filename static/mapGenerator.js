@@ -1,3 +1,4 @@
+//klasa odpowiedzialna za rysowanie mapy , mape kolizji i jej sprawdzanie
 class MapGenerator {
 	constructor(name, context, width, height) {
 		this.name = name;
